@@ -4,96 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FreeStore - Your Open App Marketplace</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            background-color: #0a192f;
+            color: #e2e8f0;
+        }
+    </style>
 </head>
-<body class="bg-blue-900 text-white">
-    <header class="bg-blue-800 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold flex items-center">
-                <img src="/api/placeholder/40/40" alt="FreeStore Logo" class="mr-2">
-                FreeStore
-            </h1>
-            <nav>
-                <ul class="flex space-x-6">
-                    <li><a href="#" class="hover:underline">Games</a></li>
-                    <li><a href="#" class="hover:underline">Apps</a></li>
-                    <li><a href="#" class="hover:underline">Movies & TV</a></li>
-                    <li><a href="#" class="hover:underline">Books</a></li>
-                    <li><a href="#" class="hover:underline">Kids</a></li>
-                </ul>
-            </nav>
-        </div>
+<body class="min-h-screen">
+    <header class="bg-blue-900 shadow-lg">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-white">FreeStore</div>
+                <div class="hidden md:flex space-x-4">
+                    <a href="#" class="text-white hover:text-blue-200">Home</a>
+                    <a href="#" class="text-white hover:text-blue-200">Apps</a>
+                    <a href="#" class="text-white hover:text-blue-200">Games</a>
+                    <a href="#" class="text-white hover:text-blue-200">For Developers</a>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <main class="container mx-auto mt-8">
-        <div class="flex space-x-4 mb-6">
-            <button class="bg-blue-700 px-4 py-2 rounded-full">Mobile</button>
-            <button class="bg-blue-800 px-4 py-2 rounded-full">Tablet</button>
-            <button class="bg-blue-800 px-4 py-2 rounded-full">TV</button>
-            <button class="bg-blue-800 px-4 py-2 rounded-full">Chromebook</button>
-            <button class="bg-blue-800 px-4 py-2 rounded-full">Watch</button>
-            <button class="bg-blue-800 px-4 py-2 rounded-full">Car</button>
-        </div>
+    <main class="container mx-auto px-6 py-8">
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-6">Featured Apps</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-blue-800 rounded-lg shadow-lg overflow-hidden">
+                    <img src="/api/placeholder/400/200" alt="Featured App 1" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-xl mb-2">Amazing App 1</h3>
+                        <p class="text-sm mb-4">Experience the future of mobile apps</p>
+                        <button onclick="purchaseApp('Amazing App 1', 4.99)" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                            Buy $4.99
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-blue-800 rounded-lg shadow-lg overflow-hidden">
+                    <img src="/api/placeholder/400/200" alt="Featured App 2" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-xl mb-2">Awesome Game</h3>
+                        <p class="text-sm mb-4">Addictive gameplay for all ages</p>
+                        <button onclick="purchaseApp('Awesome Game', 2.99)" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                            Buy $2.99
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-blue-800 rounded-lg shadow-lg overflow-hidden">
+                    <img src="/api/placeholder/400/200" alt="Featured App 3" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-xl mb-2">Productivity Pro</h3>
+                        <p class="text-sm mb-4">Boost your efficiency with AI</p>
+                        <button onclick="purchaseApp('Productivity Pro', 9.99)" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                            Buy $9.99
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-purple-700 rounded-lg p-6">
-                <h2 class="text-xl font-bold mb-2">Update Available</h2>
-                <p>Join a Quest with friends</p>
-                <div class="flex items-center mt-4">
-                    <img src="/api/placeholder/40/40" alt="App Icon" class="mr-2 rounded-lg">
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-6">For Developers</h2>
+            <div class="bg-blue-800 rounded-lg shadow-lg p-6">
+                <h3 class="text-2xl font-bold mb-4">Upload Your App</h3>
+                <form id="appUploadForm" class="space-y-4">
                     <div>
-                        <h3 class="font-bold">Duolingo: Language Courses</h3>
-                        <p class="text-sm">Duolingo</p>
+                        <label for="appName" class="block mb-2">App Name</label>
+                        <input type="text" id="appName" name="appName" required class="w-full px-3 py-2 bg-blue-700 rounded-md">
                     </div>
-                </div>
-                <button class="mt-4 bg-purple-600 px-4 py-2 rounded" onclick="purchaseApp('Duolingo', 0)">Install</button>
-            </div>
-            <div class="bg-blue-500 rounded-lg p-6">
-                <h2 class="text-xl font-bold mb-2">Amazon Music Unlimited free for 3 months</h2>
-                <div class="flex items-center mt-4">
-                    <img src="/api/placeholder/40/40" alt="Amazon Music Icon" class="mr-2 rounded-lg">
                     <div>
-                        <h3 class="font-bold">Amazon Music: Podcasts and more</h3>
-                        <p class="text-sm">Amazon Mobile LLC</p>
+                        <label for="appDescription" class="block mb-2">Description</label>
+                        <textarea id="appDescription" name="appDescription" required class="w-full px-3 py-2 bg-blue-700 rounded-md"></textarea>
                     </div>
-                </div>
-                <button class="mt-4 bg-blue-600 px-4 py-2 rounded" onclick="purchaseApp('Amazon Music', 0)">Install</button>
-            </div>
-            <div class="bg-indigo-800 rounded-lg p-6">
-                <h2 class="text-xl font-bold mb-2">App of the Week</h2>
-                <p>See this summer's hottest</p>
-                <!-- Content for the third card -->
-            </div>
-        </div>
-
-        <section>
-            <h2 class="text-2xl font-bold mb-4">Top Charts</h2>
-            <div class="flex space-x-4 mb-6">
-                <button class="bg-blue-700 px-4 py-2 rounded-full">Top Free Apps</button>
-                <button class="bg-blue-800 px-4 py-2 rounded-full">Top Grossing</button>
-                <button class="bg-blue-800 px-4 py-2 rounded-full">Top Paid Apps</button>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- App listing items would go here -->
-                <!-- Example item -->
-                <div class="flex items-center bg-blue-800 p-4 rounded-lg">
-                    <span class="mr-4 text-2xl font-bold">1</span>
-                    <img src="/api/placeholder/50/50" alt="App Icon" class="mr-4 rounded-lg">
                     <div>
-                        <h3 class="font-bold">Temu: Shop Like a Billionaire</h3>
-                        <p class="text-sm">Shopping</p>
-                        <p class="text-sm">4.6 ★</p>
+                        <label for="appPrice" class="block mb-2">Price (USD)</label>
+                        <input type="number" id="appPrice" name="appPrice" step="0.01" min="0" required class="w-full px-3 py-2 bg-blue-700 rounded-md">
                     </div>
-                    <button class="ml-auto bg-blue-600 px-4 py-2 rounded" onclick="purchaseApp('Temu', 0)">Install</button>
-                </div>
-                <!-- More items would be added here -->
+                    <div>
+                        <label for="appFile" class="block mb-2">App File (ZIP)</label>
+                        <input type="file" id="appFile" name="appFile" accept=".zip" required class="w-full px-3 py-2 bg-blue-700 rounded-md">
+                    </div>
+                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                        Upload App
+                    </button>
+                </form>
             </div>
         </section>
     </main>
 
-    <footer class="bg-blue-800 mt-8 py-4">
-        <div class="container mx-auto text-center">
+    <footer class="bg-blue-900 py-6">
+        <div class="container mx-auto px-6 text-center">
             <p>&copy; 2024 FreeStore. All rights reserved.</p>
         </div>
     </footer>
@@ -129,19 +131,41 @@
                 });
 
                 if (result.error) {
-                    // Show error to your customer
                     console.error(result.error.message);
+                    alert('Payment failed: ' + result.error.message);
                 } else {
                     if (result.paymentIntent.status === 'succeeded') {
-                        // Payment successful, you can now install the app
                         console.log('Payment successful!');
-                        // Here you would typically trigger the app installation process
+                        alert('Payment successful! Downloading ' + appName);
+                        // Here you would typically trigger the app download process
                     }
                 }
             } catch (error) {
                 console.error('Error:', error);
+                alert('An error occurred. Please try again.');
             }
         }
+
+        // Handle app upload form submission
+        document.getElementById('appUploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            try {
+                const response = await fetch('/upload-app', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert('App uploaded successfully!');
+                } else {
+                    alert('Failed to upload app. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while uploading the app.');
+            }
+        });
     </script>
 </body>
 </html>
