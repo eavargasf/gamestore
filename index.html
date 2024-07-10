@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeStore - Your Open App Marketplace</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body class="bg-blue-900 text-white">
+    <header class="bg-blue-800 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold flex items-center">
+                <img src="/api/placeholder/40/40" alt="FreeStore Logo" class="mr-2">
+                FreeStore
+            </h1>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="hover:underline">Games</a></li>
+                    <li><a href="#" class="hover:underline">Apps</a></li>
+                    <li><a href="#" class="hover:underline">Movies & TV</a></li>
+                    <li><a href="#" class="hover:underline">Books</a></li>
+                    <li><a href="#" class="hover:underline">Kids</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto mt-8">
+        <div class="flex space-x-4 mb-6">
+            <button class="bg-blue-700 px-4 py-2 rounded-full">Mobile</button>
+            <button class="bg-blue-800 px-4 py-2 rounded-full">Tablet</button>
+            <button class="bg-blue-800 px-4 py-2 rounded-full">TV</button>
+            <button class="bg-blue-800 px-4 py-2 rounded-full">Chromebook</button>
+            <button class="bg-blue-800 px-4 py-2 rounded-full">Watch</button>
+            <button class="bg-blue-800 px-4 py-2 rounded-full">Car</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-purple-700 rounded-lg p-6">
+                <h2 class="text-xl font-bold mb-2">Update Available</h2>
+                <p>Join a Quest with friends</p>
+                <div class="flex items-center mt-4">
+                    <img src="/api/placeholder/40/40" alt="App Icon" class="mr-2 rounded-lg">
+                    <div>
+                        <h3 class="font-bold">Duolingo: Language Courses</h3>
+                        <p class="text-sm">Duolingo</p>
+                    </div>
+                </div>
+                <button class="mt-4 bg-purple-600 px-4 py-2 rounded" onclick="purchaseApp('Duolingo', 0)">Install</button>
+            </div>
+            <div class="bg-blue-500 rounded-lg p-6">
+                <h2 class="text-xl font-bold mb-2">Amazon Music Unlimited free for 3 months</h2>
+                <div class="flex items-center mt-4">
+                    <img src="/api/placeholder/40/40" alt="Amazon Music Icon" class="mr-2 rounded-lg">
+                    <div>
+                        <h3 class="font-bold">Amazon Music: Podcasts and more</h3>
+                        <p class="text-sm">Amazon Mobile LLC</p>
+                    </div>
+                </div>
+                <button class="mt-4 bg-blue-600 px-4 py-2 rounded" onclick="purchaseApp('Amazon Music', 0)">Install</button>
+            </div>
+            <div class="bg-indigo-800 rounded-lg p-6">
+                <h2 class="text-xl font-bold mb-2">App of the Week</h2>
+                <p>See this summer's hottest</p>
+                <!-- Content for the third card -->
+            </div>
+        </div>
+
+        <section>
+            <h2 class="text-2xl font-bold mb-4">Top Charts</h2>
+            <div class="flex space-x-4 mb-6">
+                <button class="bg-blue-700 px-4 py-2 rounded-full">Top Free Apps</button>
+                <button class="bg-blue-800 px-4 py-2 rounded-full">Top Grossing</button>
+                <button class="bg-blue-800 px-4 py-2 rounded-full">Top Paid Apps</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- App listing items would go here -->
+                <!-- Example item -->
+                <div class="flex items-center bg-blue-800 p-4 rounded-lg">
+                    <span class="mr-4 text-2xl font-bold">1</span>
+                    <img src="/api/placeholder/50/50" alt="App Icon" class="mr-4 rounded-lg">
+                    <div>
+                        <h3 class="font-bold">Temu: Shop Like a Billionaire</h3>
+                        <p class="text-sm">Shopping</p>
+                        <p class="text-sm">4.6 ★</p>
+                    </div>
+                    <button class="ml-auto bg-blue-600 px-4 py-2 rounded" onclick="purchaseApp('Temu', 0)">Install</button>
+                </div>
+                <!-- More items would be added here -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-blue-800 mt-8 py-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 FreeStore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Stripe
+        const stripe = Stripe('YOUR_PUBLISHABLE_KEY');
+
+        async function purchaseApp(appName, price) {
+            try {
+                // Create a payment intent on your server
+                const response = await fetch('/create-payment-intent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        appName: appName,
+                        price: price,
+                    }),
+                });
+
+                const data = await response.json();
+
+                // Confirm the payment with Stripe.js
+                const result = await stripe.confirmCardPayment(data.clientSecret, {
+                    payment_method: {
+                        card: elements.getElement('card'),
+                        billing_details: {
+                            name: 'User Name',
+                        },
+                    },
+                });
+
+                if (result.error) {
+                    // Show error to your customer
+                    console.error(result.error.message);
+                } else {
+                    if (result.paymentIntent.status === 'succeeded') {
+                        // Payment successful, you can now install the app
+                        console.log('Payment successful!');
+                        // Here you would typically trigger the app installation process
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
