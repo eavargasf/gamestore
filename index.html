@@ -89,8 +89,76 @@
             </div>
         </section>
 
-        <!-- Existing sections (apps, games, forDevelopers) remain unchanged -->
-        <!-- ... -->
+        <section id="games" class="mb-12 hidden">
+            <h2 class="text-3xl font-bold mb-6">Games</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-blue-800 rounded-lg shadow-lg overflow-hidden">
+                    <img src="/api/placeholder/400/200" alt="Action Game" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-xl mb-2">Space Warriors</h3>
+                        <p class="text-sm mb-4">Epic space battles await!</p>
+                        <button onclick="purchaseApp('Space Warriors', 5.99)" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                            Buy $5.99
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-blue-800 rounded-lg shadow-lg overflow-hidden">
+                    <img src="/api/placeholder/400/200" alt="Puzzle Game" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-xl mb-2">Mind Bender</h3>
+                        <p class="text-sm mb-4">Challenge your brain with puzzles</p>
+                        <button onclick="purchaseApp('Mind Bender', 3.99)" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                            Buy $3.99
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-blue-800 rounded-lg shadow-lg overflow-hidden">
+                    <img src="/api/placeholder/400/200" alt="Strategy Game" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-xl mb-2">Empire Builder</h3>
+                        <p class="text-sm mb-4">Build and manage your own empire</p>
+                        <button onclick="purchaseApp('Empire Builder', 7.99)" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                            Buy $7.99
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="forDevelopers" class="mb-12 hidden">
+            <h2 class="text-3xl font-bold mb-6">For Developers</h2>
+            <div class="bg-blue-800 rounded-lg shadow-lg p-6">
+                <h3 class="text-2xl font-bold mb-4">Upload Your App or Game</h3>
+                <form id="appUploadForm" class="space-y-4">
+                    <div>
+                        <label for="appName" class="block mb-2">App/Game Name</label>
+                        <input type="text" id="appName" name="appName" required class="w-full px-3 py-2 bg-blue-700 rounded-md">
+                    </div>
+                    <div>
+                        <label for="appType" class="block mb-2">Type</label>
+                        <select id="appType" name="appType" required class="w-full px-3 py-2 bg-blue-700 rounded-md">
+                            <option value="app">App</option>
+                            <option value="game">Game</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="appDescription" class="block mb-2">Description</label>
+                        <textarea id="appDescription" name="appDescription" required class="w-full px-3 py-2 bg-blue-700 rounded-md"></textarea>
+                    </div>
+                    <div>
+                        <label for="appPrice" class="block mb-2">Price (USD)</label>
+                        <input type="number" id="appPrice" name="appPrice" step="0.01" min="0" required class="w-full px-3 py-2 bg-blue-700 rounded-md">
+                    </div>
+                    <div>
+                        <label for="appFile" class="block mb-2">App/Game File (ZIP)</label>
+                        <input type="file" id="appFile" name="appFile" accept=".zip" required class="w-full px-3 py-2 bg-blue-700 rounded-md">
+                    </div>
+                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                        Upload App/Game
+                    </button>
+                </form>
+            </div>
+        </section>
 
     </main>
 
